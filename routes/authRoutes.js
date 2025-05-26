@@ -29,25 +29,25 @@ router.get("/bookings", async (req, res) => {
 });
 
 //POST
-router.post("/meals", async (req, res) => {
+router.post("/", async (req, res) => {
     try{
         const {starter, mainCourse, dessert, customer} = req.body;
 
         //Validera input
-        if(!starter || !mainCourse || !dessert || !customer.firstname || !customer.lastname || customer.number){
+        if(!starter || !mainCourse || !dessert || !customer.firstname || !customer.lastname || !customer.number){
             return res.status(400).json({ error: "Du måste fylla i alla fält!" });
         }
         //Korrekt input - spara bokning
-        const booking = new Booking({ data });
+        const booking = new Booking({ starter, mainCourse, dessert, customer });
         await booking.save();
-        res.status(201).json({ message: "Bokning inlagd: " + meal.mealname});
+        res.status(201).json({ message: "Bokning inlagd: " + booking});
     } catch (error) {
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({ error: "Server error"  + error});
     }
 })
 
 //DELETE
-router.delete("/bookings/:id", async(req, res) => {
+router.delete("/:id", async(req, res) => {
     try{
         //För att kunna få ut namnet till utskriften
         const deleteMeal = await Meal.findById(req.params.id);
