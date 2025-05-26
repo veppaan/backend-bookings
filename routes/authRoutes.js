@@ -12,7 +12,7 @@ mongoose.connect(process.env.DATABASE).then(() => {
 })
 
 //Booking model
-const Booking = require("../models/Meal");
+const Booking = require("../models/Booking");
 
 //GET
 router.get("/", (req, res) => {
@@ -64,3 +64,6 @@ router.delete("/bookings/:id", async(req, res) => {
         res.status(500).json(error);
     }
 })
+
+//Returnera till anropet
+module.exports = router;
