@@ -57,7 +57,7 @@ router.delete("/:id", async(req, res) => {
         res.json({message: "Bokning avklarad och raderad: " + deleteMeal.mealname });
     } catch(error){
         //Serverfel
-        res.status(500).json(error);
+        res.status(500).json({error});
     }
 })
 
