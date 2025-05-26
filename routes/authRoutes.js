@@ -10,3 +10,6 @@ mongoose.connect(process.env.DATABASE).then(() => {
 }).catch((error) => {
     console.error("Error connecting to database...");
 })
+
+//Booking model
+const Booking = require("../models/Meal");
