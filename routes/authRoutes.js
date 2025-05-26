@@ -15,11 +15,7 @@ mongoose.connect(process.env.DATABASE).then(() => {
 const Booking = require("../models/Booking");
 
 //GET
-router.get("/", (req, res) => {
-    res.json({ message: "Välkommen till API:et" });
-})
-
-router.get("/bookings", async (req, res) => {
+router.get("/", async (req, res) => {
     try{
         const allBookings = await Booking.find({});
         res.json(allBookings);
