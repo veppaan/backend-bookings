@@ -28,6 +28,24 @@ router.get("/bookings", async (req, res) => {
     }
 });
 
+//POST
+router.post("/meals", async (req, res) => {
+    try{
+        const {starter, mainCourse, dessert, customer} = req.body;
+
+        //Validera input
+        if(!starter || !mainCourse || !dessert || !customer.firstname || !customer.lastname || customer.number){
+            return res.status(400).json({ error: "Du måste fylla i alla fält!" });
+        }
+        //Korrekt input - spara bokning
+        const booking = new Booking({ data });
+        await booking.save();
+        res.status(201).json({ message: "Bokning inlagd: " + meal.mealname});
+    } catch (error) {
+        res.status(500).json({ error: "Server error" });
+    }
+})
+
 //DELETE
 router.delete("/bookings/:id", async(req, res) => {
     try{
@@ -35,7 +53,7 @@ router.delete("/bookings/:id", async(req, res) => {
         const deleteMeal = await Meal.findById(req.params.id);
         //Kollar om bokningen finns med i databas
         if(!deleteMeal){
-            return res.status(404).json({message: "Måltiden finns inte i databasen"});
+            return res.status(404).json({message: "Bokningen finns inte i databasen"});
         }
         //Ta bort bokning
         await Meal.findByIdAndDelete(req.params.id, req.body, {new: true});
