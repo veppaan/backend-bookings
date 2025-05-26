@@ -46,18 +46,18 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async(req, res) => {
     try{
         //För att kunna få ut namnet till utskriften
-        const deleteMeal = await Meal.findById(req.params.id);
+        const deleteMeal = await Booking.findById(req.params.id);
         //Kollar om bokningen finns med i databas
         if(!deleteMeal){
             return res.status(404).json({message: "Bokningen finns inte i databasen"});
         }
         //Ta bort bokning
-        await Meal.findByIdAndDelete(req.params.id, req.body, {new: true});
+        await Booking.findByIdAndDelete(req.params.id);
         //Skriv ut meddelande
-        res.json({message: "Bokning avklarad och raderad: " + deleteMeal.mealname });
-    } catch(error){
+        res.json({message: "Bokning avklarad och raderad: ", deleteMeal });
+    } catch(err){
         //Serverfel
-        res.status(500).json({error});
+        res.status(500).json(({error: err.message}));
     }
 })
 
