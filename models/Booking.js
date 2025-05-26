@@ -7,7 +7,7 @@ const BookingSchema = new mongoose.Schema({
         required: [true, "Du måste skicka med en förrätt"]
     },
     mainCourse: {
-        type: [String],
+        type: String,
         required: [true, "Du måste skicka med en huvudrätt"]
     },
     dessert: {
@@ -17,6 +17,20 @@ const BookingSchema = new mongoose.Schema({
     created: {
         type: Date,
         default: Date.now
+    },
+    customer: {
+        firstname: {
+            type: String,
+            required: [true, "Du måste skicka med ditt förnamn"]
+        },
+        lastname: {
+            type: String,
+            required: [true, "Du måste skicka med ditt efternamn"]
+        },
+        number: {
+            type: String,
+            required: [true, "Du måste skicka med ditt telefonnummer"]
+        }
     }
 })
 
