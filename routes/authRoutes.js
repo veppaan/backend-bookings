@@ -29,14 +29,31 @@ router.post("/", async (req, res) => {
     try{
         const {starter, mainCourse, dessert, customer} = req.body;
 
+        const errors = [];
+
         //Validera input
-        if(!starter || !mainCourse || !dessert || !customer.firstname || !customer.lastname || !customer.number){
-            return res.status(400).json({ error: "Du måste fylla i alla fält!" });
+        if(!starter){
+            errors.push("Du måste välja en förrätt!")
+        }  
+        if( !mainCourse) {
+            errors.push("Du måste välja en huvudrätt!")
+        }  
+        if(!dessert){
+            errors.push("Du måste välja en efterrätt!")
+        } 
+        if(!customer.number){
+            errors.push("Du måste fylla i ditt telefonummer!")
+        } 
+        if(errors.length > 0){
+            return res.status(400).json({ error: errors });
         }
+
+        if(errors.length == 0){
         //Korrekt input - spara bokning
         const booking = new Booking({ starter, mainCourse, dessert, customer });
         await booking.save();
         res.status(201).json({ message: "Bokning inlagd: " + booking});
+        }
     } catch (error) {
         res.status(500).json({ error: "Server error"  + error});
     }
