@@ -21,11 +21,11 @@ const BookingSchema = new mongoose.Schema({
     customer: {
         firstname: {
             type: String,
-            required: [true, "Du måste skicka med ditt förnamn"]
+            required: [false]
         },
         lastname: {
             type: String,
-            required: [true, "Du måste skicka med ditt efternamn"]
+            required: [false]
         },
         number: {
             type: String,
