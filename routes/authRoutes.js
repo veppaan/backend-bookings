@@ -69,7 +69,7 @@ router.delete("/:id", async(req, res) => {
             return res.status(404).json({message: "Bokningen finns inte i databasen"});
         }
         //Ta bort bokning
-        await Booking.findByIdAndDelete(req.params.id);
+        await Booking.findByIdAndDelete(req.params.id, req.body, {new: true});
         //Skriv ut meddelande
         res.json({message: "Bokning avklarad och raderad: ", deleteMeal });
     } catch(err){
