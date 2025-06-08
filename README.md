@@ -18,7 +18,7 @@ Användning:
 |Metod | Ändpunkt | Beskrivning |
 -------|----------|-------------|
 |GET | "/" | Visar ett välkomstmeddelande|
-|GET | "/bookings" | Hämta alla lagrade måltider|
+|GET | "/bookings" | Hämta alla lagrade bokningar|
 |POST| "/bookings" | Lägg till en bokning |
 |DELETE | "/bookings/:id" | Radera en bokning med angivet id|
 
