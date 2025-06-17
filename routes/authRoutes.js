@@ -14,6 +14,22 @@ mongoose.connect(process.env.DATABASE).then(() => {
 //Booking model
 const Booking = require("../models/Booking");
 
+//Token-validator as middleware
+function authenticateToken(req, res, next){
+    const authHeader = req.headers['authorization'];
+    //Token
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if(token == null) res.status(401).json({ message: "You are not authorized for this route - missing token!" });
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, username) => {
+        if(err) return res.status(403).json({ message: "Invalid JWT" });
+
+        req.username = username;
+        next();
+    })
+}
+
 //GET
 router.get("/", async (req, res) => {
     try{
@@ -60,7 +76,7 @@ router.post("/", async (req, res) => {
 })
 
 //DELETE
-router.delete("/:id", async(req, res) => {
+router.delete("/:id", authenticateToken, async(req, res) => {
     try{
         //För att kunna få ut namnet till utskriften
         const deleteMeal = await Booking.findById(req.params.id);
